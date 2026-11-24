@@ -1,11 +1,27 @@
+import { NextResponse } from "next/server";
 import { prisma } from "@/src/lib/prisma";
 
 export const runtime = "nodejs";
 
 export async function GET() {
-  const movies = await prisma.movie.findMany();
+  try {
+    const movies = await prisma.movie.findMany();
 
-  return Response.json(movies);
+    return NextResponse.json({
+      success: true,
+      data: movies,
+    });
+  } catch (error) {
+    console.error("GET MOVIES ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to retrieve movies",
+      },
+      { status: 500 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
