@@ -44,3 +44,7 @@ dist/
 .env
 
 /src/generated/prisma
+
+.env.local
+*.db
+*.db-journal
